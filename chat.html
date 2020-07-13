@@ -1,0 +1,364 @@
+<!-- chat.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+  <!-- fontawsome -->
+  <script src="https://kit.fontawesome.com/a3762ec4df.js" crossorigin="anonymous"></script>
+
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+
+  <!-- Jquery -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+  <!-- Bootstrap js -->
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+
+</head>
+
+<body>
+<!-- NavBar -->
+  <!-- <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <h6 id="navbarId" class="navbar-brand">Your id is: {{ .Id}}</h6>
+  <a class="navBarLink" href="#">@ws_chat</a>
+</nav> -->
+
+<div class="topnav">
+  <h6 id="navbarId" class="navbar-brand text-white ml-2">Your id is: {{ .Id}}</h6>
+  <div class="topnav-right">
+    <a href="https://www.instagram.com/ws_chat/">Inst: @ws_chat</a>
+  </div>
+</div>
+
+
+  <!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Enter person id you want to text</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <input type="text" id="modalId" placeholder="Id" aria-describedby="button-addon2" class="form-control rounded-0 border-0 py-4 bg-light">
+      </div>
+      <div class="modal-footer">
+        <button type="button" id="modalBtn" class="btn btn-secondary" data-dismiss="modal">Ok</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="container py-5 px-4">
+  <div class="row rounded-lg overflow-hidden shadow">
+    <!-- Users box-->
+    <div class="col-5 px-0">
+      <div class="bg-white">
+        <div class="row bg-gray px-4 py-1 bg-light">
+          <p class="h5 mb-0 py-2">Recent</p>
+          <button type="button" class="btn" data-toggle="modal" data-target="#exampleModal"><i class="fa fa-plus" aria-hidden="true"></i></button>
+        </div>
+        <div class="messages-box">
+          <div id="messages-box" class="list-group rounded-0" style="overflow-x:hidden">
+
+            <!-- <a id="1" class="list-group-item list-group-item-action active text-white rounded-0">
+              <div class="media"><img src="https://res.cloudinary.com/mhmd/image/upload/v1564960395/avatar_usae7z.svg" alt="user" width="50" class="rounded-circle">
+                <div class="media-body ml-4">
+                  <div class="d-flex align-items-center justify-content-between mb-1">
+                    <h6 class="mb-0">Jason Doe</h6><small class="small font-weight-bold">25 Dec</small>
+                  </div>
+                  <p class="font-italic mb-0 text-small">nothing</p>
+                </div>
+              </div>
+            </a>
+
+            <a id="2" href="#" class="list-group-item list-group-item-action list-group-item-light rounded-0">
+              <div class="media"><img src="https://res.cloudinary.com/mhmd/image/upload/v1564960395/avatar_usae7z.svg" alt="user" width="50" class="rounded-circle">
+                <div class="media-body ml-4">
+                  <div class="d-flex align-items-center justify-content-between mb-3">
+                    <h6 class="mb-0">Jason Doe</h6><small class="small font-weight-bold">21 Aug</small>
+                  </div>
+                  <p class="font-italic text-muted mb-0 text-small">nothing</p>
+                </div>
+              </div>
+            </a> -->
+
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Chat Box-->
+    <div  class="col-7 px-0">
+  <div id="chatDisplay">
+
+    <div id="chat-box" class="px-4 py-5 chat-box bg-white"></div>
+
+  </div>
+      <!-- Typing area -->
+      <form class="bg-light" id="form">
+        <div class="input-group">
+          <input type="text" id="msg" placeholder="Type a message" aria-describedby="button-addon2" class="form-control rounded-0 border-0 py-4 bg-light">
+          <input type="text" id="id" placeholder="Id" aria-describedby="button-addon2" class="form-control rounded-0 border-0 py-4 bg-light">
+          <div class="input-group-append">
+            <button id="button-addon2" type="submit" class="btn btn-success"><i class="fa fa-paper-plane" aria-hidden="true"></i></button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<script type="text/javascript">
+// при нажатие на блок из Recent, дергаеться эта функция
+  function aClick(id) {
+    //alert(id)
+$("[id=msg" + id +"]").show()
+$("#id").attr("value", id)
+    for (var i = 0; i < arrOfId.length; i++) {
+    //  alert(arrOfId[i])
+      if (arrOfId[i] != id){
+        //alert("[id=msg" + arrOfId[i] +"]")
+        $("[id=msg" + arrOfId[i] +"]").hide()
+      }
+    }
+$(".active").removeClass("text-white")
+$(".active").removeClass("active")
+$("#" + id).removeClass("list-group-item-light")
+$("#" + id).addClass("active")
+$("#" + id).addClass("text-white")
+
+  }
+//при нажатие на кнопку  Ok из модального окна, дергаеться этот обраюотчик
+  $("#modalBtn").click(function() {
+    if (!arrOfId.includes($("#modalId").val())) {
+      arrOfId.push($("#modalId").val())
+       //alert("we pushed" + $("#modalId").val())
+    }
+if (document.getElementsByClassName("active")[0]) {
+  messagesbox.innerHTML += '<a onclick="aClick(this.id);" id="a0" class="list-group-item list-group-item-action rounded-0"><div class="media"><img src="https://res.cloudinary.com/mhmd/image/upload/v1564960395/avatar_usae7z.svg" alt="user" width="50" class="rounded-circle"><div class="media-body ml-4"><div  class="d-flex align-items-center justify-content-between mb-1"><h6 id="h60" class="mb-0">' + 'name: ' + ', '+ 'id: '+$("#modalId").val() +'</h6></div><p id="p0" class="font-italic mb-0 text-small" style="text-overflow: ellipsis; white-space: nowrap; overflow: hidden;">' + '</p></div></div></a>';
+ document.getElementById("a0").id = $("#modalId").val()
+ document.getElementById("p0").id = "p" + $("#modalId").val()
+ document.getElementById("h60").id = "h6" + $("#modalId").val()
+} else {
+    messagesbox.innerHTML += '<a onclick="aClick(this.id);" id="a0" class="list-group-item list-group-item-action active text-white rounded-0"><div class="media"><img src="https://res.cloudinary.com/mhmd/image/upload/v1564960395/avatar_usae7z.svg" alt="user" width="50" class="rounded-circle"><div class="media-body ml-4"><div  class="d-flex align-items-center justify-content-between mb-1"><h6 id="h60" class="mb-0">' + 'name: ' + ', '+ 'id: '+$("#modalId").val() +'</h6></div><p id="p0" class="font-italic mb-0 text-small" style="text-overflow: ellipsis; white-space: nowrap; overflow: hidden;">' + '</p></div></div></a>';
+   document.getElementById("a0").id = $("#modalId").val()
+   document.getElementById("p0").id = "p" + $("#modalId").val()
+   document.getElementById("h60").id = "h6" + $("#modalId").val()
+}
+
+i += 1
+  })
+
+</script>
+
+<!-- javascript -->
+
+<script type="text/javascript">
+var arrOfId = [];
+var messagesbox = document.getElementById("messages-box");
+var i = 1
+window.onload = function () {
+
+var msg = document.getElementById("msg");
+var id = document.getElementById("id");
+// var conn = new WebSocket("ws://180.10.0.18:8080/ws");
+var conn = new WebSocket("wss://180.10.0.18:8080/ws");
+
+//var conn = new WebSocket("ws://180.10.10.231:8080/ws");
+var chatBox = document.getElementById("chat-box")
+var chatDisplay = document.getElementById("chatDisplay")
+
+// сообщение от сервера по веб-сокету приходит в эту функцию
+conn.onmessage = function (event) {
+  //alert(JSON.parse(event.data).username)
+  var msg = JSON.parse(event.data).msg
+
+if (!arrOfId.includes(JSON.parse(event.data).id)) {
+  arrOfId.push(JSON.parse(event.data).id)
+//  alert("we pushed" + JSON.parse(event.data).id + "onmessage ")
+}
+
+chatBox.innerHTML += '<div id="msg0" class="media w-50 mb-3"><img src="https://res.cloudinary.com/mhmd/image/upload/v1564960395/avatar_usae7z.svg" alt="user" width="50" class="rounded-circle"><div class="media-body ml-3"><div class="bg-light rounded py-2 px-3 mb-2"><p class="text-small mb-0 text-muted">'+ msg +'</p></div></div></div>';
+document.getElementById("msg0").id = "msg" + JSON.parse(event.data).id;
+// alert(chatDisplay.innerHTML)
+//alert(i)
+if (i>=3) {
+  //alert(i)
+  $("#"+"msg" + JSON.parse(event.data).id).hide()
+}
+
+if (!document.getElementById(JSON.parse(event.data).id)) {
+ if (i==1) {
+// alert("i<=1")
+  messagesbox.innerHTML += '<a onclick="aClick(this.id);" id="a0" class="list-group-item list-group-item-action active text-white rounded-0"><div class="media"><img src="https://res.cloudinary.com/mhmd/image/upload/v1564960395/avatar_usae7z.svg" alt="user" width="50" class="rounded-circle"><div class="media-body ml-4"><div  class="d-flex align-items-center justify-content-between mb-1"><h6 id="h60" class="mb-0">' + 'name: ' +JSON.parse(event.data).username + ', '+ 'id: '+JSON.parse(event.data).id +'</h6></div><p id="p0" class="font-italic mb-0 text-small" style="text-overflow: ellipsis; white-space: nowrap; overflow: hidden;">' + '</p></div></div></a>';
+ document.getElementById("a0").id = JSON.parse(event.data).id;
+ document.getElementById("p0").id = "p" + JSON.parse(event.data).id;
+ document.getElementById("h60").id = "h6" + JSON.parse(event.data).id;
+
+ i += 1
+ //alert(i)
+}else {
+// alert("else")
+  messagesbox.innerHTML += '<a onclick="aClick(this.id)" id="a0" class="list-group-item list-group-item-action list-group-item-light rounded-0"><div class="media"><img src="https://res.cloudinary.com/mhmd/image/upload/v1564960395/avatar_usae7z.svg" alt="user" width="50" class="rounded-circle"><div class="media-body ml-4"><div class="d-flex align-items-center justify-content-between mb-1"><h6 id="h60" class="mb-0">' + 'name: ' +JSON.parse(event.data).username + ', ' + 'id: '+JSON.parse(event.data).id +'</h6></div><p id="p0" class="font-italic mb-0 text-small">' + '</p></div></div></a>';
+ document.getElementById("a0").id = JSON.parse(event.data).id;
+ document.getElementById("p0").id = "p" + JSON.parse(event.data).id;
+ document.getElementById("h60").id = "h6" + JSON.parse(event.data).id;
+
+ $("#"+"msg" + JSON.parse(event.data).id).hide()
+
+for (var numId = 0; numId < arrOfId.length; numId++) {
+    if (arrOfId[numId] == JSON.parse(event.data).id){
+      $("[id=msg" + arrOfId[numId] +"]").hide()
+    }
+   }
+  }
+ }
+
+if (document.getElementById("h6" + JSON.parse(event.data).id).innerHTML == "name: "+ ', '+ 'id: '+JSON.parse(event.data).id){
+  document.getElementById("h6" + JSON.parse(event.data).id).innerHTML = "name: " + JSON.parse(event.data).username + ', '+ 'id: '+JSON.parse(event.data).id;
+ }
+
+$("#"+"p"+JSON.parse(event.data).id).empty()
+$("#"+"p"+JSON.parse(event.data).id).append(JSON.parse(event.data).msg)
+
+}
+
+// отправка сообщения в веб-сокет происходит в этом обработчике
+document.getElementById("form").onsubmit = function () {
+    if (!conn) {
+        return false;
+    }
+    if (!msg.value) {
+        return false;
+    }
+    var json = `{"msg": "${msg.value}", "id": "${id.value}"}`
+
+    conn.send(json);
+
+if (chatBox.innerHTML != "" ) {
+  // alert("something in chat box")
+  activeA = document.getElementsByClassName("active")[0].id // link id with class .active
+// alert(activeA)
+if (id.value == activeA) {
+  // alert(activeA)
+  chatBox.innerHTML += `<div id="ch0" class="media w-50 ml-auto mb-3"><div class="media-body"><div class="bg-primary rounded py-2 px-3 mb-2"><p class="text-small mb-0 text-white">` + msg.value + `</p></div></div></div>`
+  document.getElementById("ch0").id = "msg" + id.value;
+} else {
+  // alert("hide all msg")
+  chatBox.innerHTML += `<div id="ch0" class="media w-50 ml-auto mb-3"><div class="media-body"><div class="bg-primary rounded py-2 px-3 mb-2"><p class="text-small mb-0 text-white">` + msg.value + `</p></div></div></div>`
+  document.getElementById("ch0").id = "msg" + id.value;
+  //захайдили все сообщения с этим id
+$("[id=msg" + id.value +"]").hide()
+ }
+}else{
+  chatBox.innerHTML += `<div id="ch0" class="media w-50 ml-auto mb-3"><div class="media-body"><div class="bg-primary rounded py-2 px-3 mb-2"><p class="text-small mb-0 text-white">` + msg.value + `</p></div></div></div>`
+  document.getElementById("ch0").id = "msg" + id.value;
+}
+    //alert("msg" + id.value)
+    if (!document.getElementById(id.value)) {
+     if (!arrOfId.includes(id.value)) {
+      arrOfId.push(id.value)
+      // alert("we pushed" + id.value)
+    }
+  $(".active").removeClass("text-white")
+  $(".active").removeClass("active")
+    messagesbox.innerHTML += '<a onclick="aClick(this.id);" id="a0" class="list-group-item list-group-item-action active text-white rounded-0"><div class="media"><img src="https://res.cloudinary.com/mhmd/image/upload/v1564960395/avatar_usae7z.svg" alt="user" width="50" class="rounded-circle"><div class="media-body ml-4"><div  class="d-flex align-items-center justify-content-between mb-1"><h6 id="h60" class="mb-0">' + 'name: ' + ', '+ 'id: '+id.value +'</h6></div><p id="p0" class="font-italic mb-0 text-small" style="text-overflow: ellipsis; white-space: nowrap; overflow: hidden;">' + '</p></div></div></a>';
+   document.getElementById("a0").id = id.value
+   document.getElementById("p0").id = "p" + id.value
+   document.getElementById("h60").id = "h6" + id.value
+}
+   msg.value = "";
+
+  return false;
+};
+
+}
+</script>
+
+<!-- css -->
+<style type="text/css">
+
+body {
+  background-color: #74EBD5;
+  background-image: linear-gradient(90deg, #74EBD5 0%, #9FACE6 100%);
+
+  min-height: 100vh;
+}
+
+::-webkit-scrollbar {
+  width: 5px;
+}
+
+::-webkit-scrollbar-track {
+  width: 5px;
+  background: #f5f5f5;
+}
+
+::-webkit-scrollbar-thumb {
+  width: 1em;
+  background-color: #ddd;
+  outline: 1px solid slategrey;
+  border-radius: 1rem;
+}
+
+.text-small {
+  font-size: 0.9rem;
+}
+
+.messages-box,
+.chat-box {
+  height: 510px;
+  overflow-y: scroll;
+}
+
+.rounded-lg {
+  border-radius: 0.5rem;
+}
+
+input::placeholder {
+  font-size: 0.9rem;
+  color: #999;
+}
+
+/* Add a black background color to the top navigation */
+.topnav {
+    background-color: #333;
+    overflow: hidden;
+}
+
+/* Style the links inside the navigation bar */
+.topnav a {
+  float: left;
+  color: #f2f2f2;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+  font-size: 17px;
+}
+
+/* Change the color of links on hover */
+.topnav a:hover {
+  background-color: #ddd;
+  color: black;
+}
+
+/* Add a color to the active/current link */
+.topnav a.active {
+  background-color: #4CAF50;
+  color: white;
+}
+
+/* Right-aligned section inside the top navigation */
+.topnav-right {
+  float: right;
+}
+</style>
+</body>
+</html>
